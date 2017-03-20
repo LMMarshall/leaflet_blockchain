@@ -1,0 +1,22 @@
+---
+title: "SF Bay Area Blockchain Startups"
+author: "LMarshall"
+date: "March 18, 2017"
+output: html_document
+---
+
+This is a map of blockchain startups in the San Francisco Bay Area. Hover over a marker to view the company name and click to see the funding amount to date. Funding figures, where available, were pulled from CrunchBase or AngelList. Some company locations were pulled from Pitchbook.
+
+```{r, echo=FALSE}
+library(leaflet)
+df <- read.csv('blockchain_cos.csv')
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(lat=df$Lat, lng=df$Long,
+                  popup=paste('$',prettyNum(df$Funding,big.mark=",")),
+                   label=df$Company,
+                   clusterOptions = markerClusterOptions())
+```
+
+
